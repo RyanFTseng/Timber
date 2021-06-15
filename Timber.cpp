@@ -4,6 +4,18 @@
 
 // Make code easier to type with "using namespace"
 using namespace sf;
+
+//functiond declaration
+void updateBranches(int seed);
+
+const int NUM_BRANCHES = 6;
+Sprite branches[NUM_BRANCHES];
+
+//location of branch
+enum class side { LEFT, RIGHT, NONE };
+side branchPositions[NUM_BRANCHES];
+
+
 // This is where our game starts from
 int main()
 {
@@ -116,6 +128,17 @@ int main()
 	messageText.setPosition(1920 / 2.0f, 1080 / 2.0f);
 	scoreText.setPosition(20, 20);
 
+	//Prepare 6 branches
+	Texture textureBranch;
+	textureBranch.loadFromFile("/graphics/branch.png");
+
+	//set branch texture
+	for (int i = 0; i < NUM_BRANCHES; i++)
+	{
+		branches[i].setTexture(textureBranch);
+		branches[i].setPosition(-2000, -2000);
+		branches[i].setOrigin(200, 20);
+	}
 
 	while (window.isOpen())
 	{
@@ -279,6 +302,33 @@ int main()
 			std::stringstream ss;
 			ss << "Score = " << score;
 			scoreText.setString(ss.str());
+
+			//update branch sprites
+			for (int i = 0; i < NUM_BRANCHES; i++) 
+			{
+				float height = i * 150;
+				if (branchPositions[i] == side::LEFT)
+				{
+					//move Sprite to left side 
+					branches[i].setPosition(610, height);
+					//Flip branch sprite
+					branches[i].setRotation(180);
+
+				}
+				else if (branchPositions[i] == side::RIGHT)
+				{
+					//move sprite to right side
+					branches[i].setPosition(1330, height);
+					//keep branch rotation
+					branches[i].setRotation(0);
+				}
+				else
+				{
+					//hide branch
+					branches[i].setPosition(3000, height);
+				}
+			}
+
 		}
 
 		/*
@@ -310,4 +360,27 @@ int main()
 		window.display();
 	}
 return 0;
+}
+
+//branch function
+void updateBranches(int seed) {
+	//move all branches to one place
+	for (int j = NUM_BRANCHES - 1; j > 0; j--)
+	{
+		branchPositions[j] = branchPositions[j - 1];
+	}
+	//spawn new branch
+	srand((int)time(0) + seed);
+	int r = (rand() % 5);
+	switch (r) {
+	case 0:
+		branchPositions[0] = side::LEFT;
+		break;
+	case 1:
+		branchPositions[0] = side::RIGHT;
+		break;
+	default:
+		branchPositions[0] = side::NONE;
+		break;
+	}
 }
