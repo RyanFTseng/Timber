@@ -1,10 +1,17 @@
 ﻿  Timber.cpp
-C:\VS Projects\Timber\Timber.cpp(178,31): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
-C:\VS Projects\Timber\Timber.cpp(182,18): warning C4244: 'initializing': conversion from 'int' to 'float', possible loss of data
-C:\VS Projects\Timber\Timber.cpp(208,27): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
-C:\VS Projects\Timber\Timber.cpp(211,18): warning C4244: 'initializing': conversion from 'int' to 'float', possible loss of data
-C:\VS Projects\Timber\Timber.cpp(233,27): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
-C:\VS Projects\Timber\Timber.cpp(236,18): warning C4244: 'initializing': conversion from 'int' to 'float', possible loss of data
-C:\VS Projects\Timber\Timber.cpp(257,27): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
-C:\VS Projects\Timber\Timber.cpp(260,18): warning C4244: 'initializing': conversion from 'int' to 'float', possible loss of data
-  Timber.vcxproj -> C:\VS Projects\Timber\Debug\Timber.exe
+C:\VS Projects\Timber\Timber.cpp(241,39): warning C4244: '+=': conversion from 'double' to 'float', possible loss of data
+C:\VS Projects\Timber\Timber.cpp(262,39): warning C4244: '+=': conversion from 'double' to 'float', possible loss of data
+C:\VS Projects\Timber\Timber.cpp(313,31): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
+C:\VS Projects\Timber\Timber.cpp(317,18): warning C4244: 'initializing': conversion from 'int' to 'float', possible loss of data
+C:\VS Projects\Timber\Timber.cpp(343,27): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
+C:\VS Projects\Timber\Timber.cpp(346,18): warning C4244: 'initializing': conversion from 'int' to 'float', possible loss of data
+C:\VS Projects\Timber\Timber.cpp(368,27): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
+C:\VS Projects\Timber\Timber.cpp(371,18): warning C4244: 'initializing': conversion from 'int' to 'float', possible loss of data
+C:\VS Projects\Timber\Timber.cpp(392,27): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
+C:\VS Projects\Timber\Timber.cpp(395,18): warning C4244: 'initializing': conversion from 'int' to 'float', possible loss of data
+C:\VS Projects\Timber\Timber.cpp(421,18): warning C4244: 'initializing': conversion from 'int' to 'float', possible loss of data
+C:\VS Projects\Timber\Timber.cpp(527,1): error C2059: syntax error: 'return'
+C:\VS Projects\Timber\Timber.cpp(528,1): error C2059: syntax error: '}'
+C:\VS Projects\Timber\Timber.cpp(528,1): error C2143: syntax error: missing ';' before '}'
+C:\VS Projects\Timber\Timber.cpp(531,31): error C2143: syntax error: missing ';' before '{'
+C:\VS Projects\Timber\Timber.cpp(531,31): error C2447: '{': missing function header (old-style formal list?)
