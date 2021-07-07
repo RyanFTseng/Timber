@@ -81,7 +81,7 @@ int main()
 
 	// Variables to control time itself
 	Clock clock;
-	
+
 	//Time bar
 	RectangleShape timeBar;
 	float timeBarStartWidth = 400;
@@ -108,7 +108,7 @@ int main()
 	font.loadFromFile("fonts/KOMIKAP_.ttf");
 	messageText.setFont(font);
 	scoreText.setFont(font);
-	
+
 	//assign message 
 	messageText.setString("Press Enter to Start!");
 	scoreText.setString("Score = 0");
@@ -190,7 +190,7 @@ int main()
 		****************************************
 		*/
 
-		Event event; 
+		Event event;
 		while (window.pollEvent(event))
 		{
 			if (event.type == Event::KeyReleased && !paused)
@@ -202,9 +202,9 @@ int main()
 		}
 
 		if (Keyboard::isKeyPressed(Keyboard::Escape))
-			{
-				window.close();
-			}
+		{
+			window.close();
+		}
 
 		//start game
 		if (Keyboard::isKeyPressed(Keyboard::Return))
@@ -224,8 +224,8 @@ int main()
 			spriteRIP.setPosition(675, 2000);
 
 			//reset player position 
-			spritePlayer.setPosition(580,720);
-			
+			spritePlayer.setPosition(580, 720);
+
 			acceptInput = true;
 		}
 
@@ -272,258 +272,258 @@ int main()
 				acceptInput = false;
 			}
 		}
-		}
-
-		/*
-		****************************************
-		Update the scene
-		****************************************
-		*/
-		if (!paused) {
-			// Measure time
-			Time dt = clock.restart();
-
-			//Subtract from remaining time
-			timeRemaining -= dt.asSeconds();
-			//resize time bar
-			timeBar.setSize(Vector2f(timeBarWidthPerSecond *
-				timeRemaining, timeBarHeight));
-
-			if (timeRemaining <= 0.0f) {
-				//pause game
-				paused = true;
-
-				//change message
-				messageText.setString("Out of time!!");
-
-				//Reposition text based on its new size
-				FloatRect textRect = messageText.getLocalBounds();
-				messageText.setOrigin(textRect.left +
-					textRect.width / 2.0f,
-					textRect.top +
-					textRect.height / 2.0f);
-				messageText.setPosition(1920 / 2.0f, 1080 / 2.0f);
-			}
-
-			//Setup the bee
-			if (!beeActive)
-			{
-				//how fast is the bee
-				srand((int)time(0));
-				beeSpeed = (rand() % 200) + 200;
-
-				//how high is the bee
-				srand((int)time(0) * 10);
-				float height = (rand() % 500) + 500;
-				spriteBee.setPosition(2000, height);
-				beeActive = true;
-			}
-			else
-				//Move the bee
-			{
-				spriteBee.setPosition(
-					spriteBee.getPosition().x -
-					(beeSpeed * dt.asSeconds()),
-					spriteBee.getPosition().y);
-				//has the bee reached the left-hand edge of the screen?
-				if (spriteBee.getPosition().x < -100)
-				{
-					//set up the bee for the next frame
-					beeActive = false;
-				}
-
-			}
-
-			//Manage clouds
-			//cloud1
-			if (!cloud1Active)
-			{
-				//how fast is the cloud 
-				srand((int)time(0) * 10);
-				cloud1Speed = (rand() % 200);
-				//how high is the cloud
-				srand((int)time(0) * 10);
-				float height = (rand() % 150);
-				spriteCloud1.setPosition(-200, height);
-				cloud1Active = true;
-			}
-			else
-			{
-				spriteCloud1.setPosition(
-					spriteCloud1.getPosition().x +
-					(cloud1Speed * dt.asSeconds()),
-					spriteCloud1.getPosition().y);
-				//reset cloud position
-				if (spriteCloud1.getPosition().x > 1920)
-				{
-					cloud1Active = false;
-				}
-			}
-
-			// Cloud 2
-			if (!cloud2Active)
-			{
-				// How fast is the cloud
-				srand((int)time(0) * 20);
-				cloud2Speed = (rand() % 200);
-				// How high is the cloud
-				srand((int)time(0) * 20);
-				float height = (rand() % 300) - 150;
-				spriteCloud2.setPosition(-200, height);
-				cloud2Active = true;
-			}
-			else
-			{
-				spriteCloud2.setPosition(
-					spriteCloud2.getPosition().x +
-					(cloud2Speed * dt.asSeconds()),
-					spriteCloud2.getPosition().y);
-				// Has the cloud reached the right hand edge of the screen?
-				if (spriteCloud2.getPosition().x > 1920)
-				{
-					// Set it up ready to be a whole new cloud next frame
-					cloud2Active = false;
-				}
-			}
-			if (!cloud3Active)
-			{
-				// How fast is the cloud
-				srand((int)time(0) * 30);
-				cloud3Speed = (rand() % 200);
-				// How high is the cloud
-				srand((int)time(0) * 30);
-				float height = (rand() % 450) - 150;
-				spriteCloud3.setPosition(-200, height);
-				cloud3Active = true;
-			}
-			else
-			{
-				spriteCloud3.setPosition(
-					spriteCloud3.getPosition().x +
-					(cloud3Speed * dt.asSeconds()),
-					spriteCloud3.getPosition().y);
-				// Has the cloud reached the right hand edge of the screen?
-				if (spriteCloud3.getPosition().x > 1920)
-				{
-					// Set it up ready to be a whole new cloud next frame
-					cloud3Active = false;
-				}
-			}
-
-			//update score text
-			std::stringstream ss;
-			ss << "Score = " << score;
-			scoreText.setString(ss.str());
-
-			//update branch sprites
-			for (int i = 0; i < NUM_BRANCHES; i++) 
-			{
-				float height = i * 150;
-				if (branchPositions[i] == side::LEFT)
-				{
-					//move Sprite to left side 
-					branches[i].setPosition(610, height);
-					//Flip branch sprite
-					branches[i].setRotation(180);
-
-				}
-				else if (branchPositions[i] == side::RIGHT)
-				{
-					//move sprite to right side
-					branches[i].setPosition(1330, height);
-					//keep branch rotation
-					branches[i].setRotation(0);
-				}
-				else
-				{
-					//hide branch
-					branches[i].setPosition(3000, height);
-				}
-			}
-			// Handle a flying log
-			if (logActive)
-			{
-				spriteLog.setPosition(
-					spriteLog.getPosition().x +
-					(logSpeedX * dt.asSeconds()),
-
-					spriteLog.getPosition().y +
-					(logSpeedY * dt.asSeconds()));
-				// Has the log reached the right hand edge?
-				if (spriteLog.getPosition().x < -100 ||
-					spriteLog.getPosition().x > 2000)
-				{
-					// Set it up ready to be a whole new log next frame
-					logActive = false;
-					spriteLog.setPosition(810, 600);
-				}
-			}
-			// has the player been squished by a branch?
-			if (branchPositions[5] == playerSide)
-			{
-				// death
-				paused = true;
-				acceptInput = false;
-
-				// Draw the gravestone
-				spriteRIP.setPosition(525, 760);
-				// hide the player
-				spritePlayer.setPosition(2000, 660);
-				// Change the text of the message
-				messageText.setString("SQUISHED!!");
-				// Center it on the screen
-				FloatRect textRect = messageText.getLocalBounds();
-				messageText.setOrigin(textRect.left +
-					textRect.width / 2.0f,
-					textRect.top + textRect.height / 2.0f);
-				messageText.setPosition(1920 / 2.0f,
-					1080 / 2.0f);
-			}
-
-		}
-
-		/*
-		****************************************
-		Draw the scene
-		****************************************
-		*/
-		// Clear everything from the last frame
-		window.clear();
-		// Draw our game scene here
-		window.draw(spriteBackground);
-		window.draw(spriteCloud1);
-		window.draw(spriteCloud2);
-		window.draw(spriteCloud3);
-		// Draw the branches
-		for (int i = 0; i < NUM_BRANCHES; i++) {
-			window.draw(branches[i]);
-		}
-		//draw tree
-		window.draw(spriteTree);
-		// Draw the player
-		window.draw(spritePlayer);
-		// Draw the axe
-		window.draw(spriteAxe);
-		// Draw the flying log
-		window.draw(spriteLog);
-		// Draw the gravestone
-		window.draw(spriteRIP);
-
-		window.draw(spriteBee);
-		
-		//draw score text and pause message
-		window.draw(scoreText);
-		if (paused)
-		{
-			window.draw(messageText);
-		}
-
-		//draw timebar
-		window.draw(timeBar);
-
-		// Show everything we just drew
-		window.display();
 	}
+
+	/*
+	****************************************
+	Update the scene
+	****************************************
+	*/
+	if (!paused) {
+		// Measure time
+		Time dt = clock.restart();
+
+		//Subtract from remaining time
+		timeRemaining -= dt.asSeconds();
+		//resize time bar
+		timeBar.setSize(Vector2f(timeBarWidthPerSecond *
+			timeRemaining, timeBarHeight));
+
+		if (timeRemaining <= 0.0f) {
+			//pause game
+			paused = true;
+
+			//change message
+			messageText.setString("Out of time!!");
+
+			//Reposition text based on its new size
+			FloatRect textRect = messageText.getLocalBounds();
+			messageText.setOrigin(textRect.left +
+				textRect.width / 2.0f,
+				textRect.top +
+				textRect.height / 2.0f);
+			messageText.setPosition(1920 / 2.0f, 1080 / 2.0f);
+		}
+
+		//Setup the bee
+		if (!beeActive)
+		{
+			//how fast is the bee
+			srand((int)time(0));
+			beeSpeed = (rand() % 200) + 200;
+
+			//how high is the bee
+			srand((int)time(0) * 10);
+			float height = (rand() % 500) + 500;
+			spriteBee.setPosition(2000, height);
+			beeActive = true;
+		}
+		else
+			//Move the bee
+		{
+			spriteBee.setPosition(
+				spriteBee.getPosition().x -
+				(beeSpeed * dt.asSeconds()),
+				spriteBee.getPosition().y);
+			//has the bee reached the left-hand edge of the screen?
+			if (spriteBee.getPosition().x < -100)
+			{
+				//set up the bee for the next frame
+				beeActive = false;
+			}
+
+		}
+
+		//Manage clouds
+		//cloud1
+		if (!cloud1Active)
+		{
+			//how fast is the cloud 
+			srand((int)time(0) * 10);
+			cloud1Speed = (rand() % 200);
+			//how high is the cloud
+			srand((int)time(0) * 10);
+			float height = (rand() % 150);
+			spriteCloud1.setPosition(-200, height);
+			cloud1Active = true;
+		}
+		else
+		{
+			spriteCloud1.setPosition(
+				spriteCloud1.getPosition().x +
+				(cloud1Speed * dt.asSeconds()),
+				spriteCloud1.getPosition().y);
+			//reset cloud position
+			if (spriteCloud1.getPosition().x > 1920)
+			{
+				cloud1Active = false;
+			}
+		}
+
+		// Cloud 2
+		if (!cloud2Active)
+		{
+			// How fast is the cloud
+			srand((int)time(0) * 20);
+			cloud2Speed = (rand() % 200);
+			// How high is the cloud
+			srand((int)time(0) * 20);
+			float height = (rand() % 300) - 150;
+			spriteCloud2.setPosition(-200, height);
+			cloud2Active = true;
+		}
+		else
+		{
+			spriteCloud2.setPosition(
+				spriteCloud2.getPosition().x +
+				(cloud2Speed * dt.asSeconds()),
+				spriteCloud2.getPosition().y);
+			// Has the cloud reached the right hand edge of the screen?
+			if (spriteCloud2.getPosition().x > 1920)
+			{
+				// Set it up ready to be a whole new cloud next frame
+				cloud2Active = false;
+			}
+		}
+		if (!cloud3Active)
+		{
+			// How fast is the cloud
+			srand((int)time(0) * 30);
+			cloud3Speed = (rand() % 200);
+			// How high is the cloud
+			srand((int)time(0) * 30);
+			float height = (rand() % 450) - 150;
+			spriteCloud3.setPosition(-200, height);
+			cloud3Active = true;
+		}
+		else
+		{
+			spriteCloud3.setPosition(
+				spriteCloud3.getPosition().x +
+				(cloud3Speed * dt.asSeconds()),
+				spriteCloud3.getPosition().y);
+			// Has the cloud reached the right hand edge of the screen?
+			if (spriteCloud3.getPosition().x > 1920)
+			{
+				// Set it up ready to be a whole new cloud next frame
+				cloud3Active = false;
+			}
+		}
+
+		//update score text
+		std::stringstream ss;
+		ss << "Score = " << score;
+		scoreText.setString(ss.str());
+
+		//update branch sprites
+		for (int i = 0; i < NUM_BRANCHES; i++)
+		{
+			float height = i * 150;
+			if (branchPositions[i] == side::LEFT)
+			{
+				//move Sprite to left side 
+				branches[i].setPosition(610, height);
+				//Flip branch sprite
+				branches[i].setRotation(180);
+
+			}
+			else if (branchPositions[i] == side::RIGHT)
+			{
+				//move sprite to right side
+				branches[i].setPosition(1330, height);
+				//keep branch rotation
+				branches[i].setRotation(0);
+			}
+			else
+			{
+				//hide branch
+				branches[i].setPosition(3000, height);
+			}
+		}
+		// Handle a flying log
+		if (logActive)
+		{
+			spriteLog.setPosition(
+				spriteLog.getPosition().x +
+				(logSpeedX * dt.asSeconds()),
+
+				spriteLog.getPosition().y +
+				(logSpeedY * dt.asSeconds()));
+			// Has the log reached the right hand edge?
+			if (spriteLog.getPosition().x < -100 ||
+				spriteLog.getPosition().x > 2000)
+			{
+				// Set it up ready to be a whole new log next frame
+				logActive = false;
+				spriteLog.setPosition(810, 600);
+			}
+		}
+		// has the player been squished by a branch?
+		if (branchPositions[5] == playerSide)
+		{
+			// death
+			paused = true;
+			acceptInput = false;
+
+			// Draw the gravestone
+			spriteRIP.setPosition(525, 760);
+			// hide the player
+			spritePlayer.setPosition(2000, 660);
+			// Change the text of the message
+			messageText.setString("SQUISHED!!");
+			// Center it on the screen
+			FloatRect textRect = messageText.getLocalBounds();
+			messageText.setOrigin(textRect.left +
+				textRect.width / 2.0f,
+				textRect.top + textRect.height / 2.0f);
+			messageText.setPosition(1920 / 2.0f,
+				1080 / 2.0f);
+		}
+
+	}
+
+	/*
+	****************************************
+	Draw the scene
+	****************************************
+	*/
+	// Clear everything from the last frame
+	window.clear();
+	// Draw our game scene here
+	window.draw(spriteBackground);
+	window.draw(spriteCloud1);
+	window.draw(spriteCloud2);
+	window.draw(spriteCloud3);
+	// Draw the branches
+	for (int i = 0; i < NUM_BRANCHES; i++) {
+		window.draw(branches[i]);
+	}
+	//draw tree
+	window.draw(spriteTree);
+	// Draw the player
+	window.draw(spritePlayer);
+	// Draw the axe
+	window.draw(spriteAxe);
+	// Draw the flying log
+	window.draw(spriteLog);
+	// Draw the gravestone
+	window.draw(spriteRIP);
+
+	window.draw(spriteBee);
+
+	//draw score text and pause message
+	window.draw(scoreText);
+	if (paused)
+	{
+		window.draw(messageText);
+	}
+
+	//draw timebar
+	window.draw(timeBar);
+
+	// Show everything we just drew
+	window.display();
+}
 return 0;
 }
 
